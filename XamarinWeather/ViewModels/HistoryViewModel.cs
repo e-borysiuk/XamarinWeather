@@ -10,23 +10,16 @@ using XamarinWeather.Views;
 
 namespace XamarinWeather.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class HistoryViewModel : BaseViewModel
     {
         public ObservableCollection<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public HistoryViewModel()
         {
-            Title = "Browse";
+            Title = "History";
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            {
-                var newItem = item as Item;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
-            });
         }
 
         async Task ExecuteLoadItemsCommand()

@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace XamarinWeather.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class HomePageViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public HomePageViewModel()
         {
-            Title = "About";
+            Title = "Homepage";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://xamarin.com"));
         }
 
