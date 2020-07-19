@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -12,14 +13,14 @@ namespace XamarinWeather.ViewModels
 {
     public class HistoryViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public IEnumerable<Item> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
         public HistoryViewModel()
         {
             Title = "History";
-            Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
+            LoadItemsCommand.Execute(null);
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -28,12 +29,8 @@ namespace XamarinWeather.ViewModels
 
             try
             {
-                Items.Clear();
                 var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
+                Items = new List<Item>(items);
             }
             catch (Exception ex)
             {

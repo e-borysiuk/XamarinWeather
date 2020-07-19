@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace XamarinWeather.Views
         public HistoryPage()
         {
             InitializeComponent();
+
+        }
+
+        protected override void OnAppearing()
+        {
+            ItemsCollectionView.ItemsSource = ViewModel.Items;
+            base.OnAppearing();
         }
     }
 }
