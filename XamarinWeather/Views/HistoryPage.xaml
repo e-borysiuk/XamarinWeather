@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rxui:ReactiveContentPage
+    x:Class="XamarinWeather.Views.HistoryPage"
+    xmlns:local="clr-namespace:XamarinWeather.ViewModels;assembly=XamarinWeather"
+    x:TypeArguments="local:HistoryViewModel"          
+    xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    Title="Weather history">
+    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
+        <CollectionView x:Name="ItemsCollectionView">
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>First Item</x:String>
+                    <x:String>Second Item</x:String>
+                    <x:String>Third Item</x:String>
+                    <x:String>Fourth Item</x:String>
+                    <x:String>Fifth Item</x:String>
+                    <x:String>Sixth Item</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Text}" 
+                               LineBreakMode="NoWrap" 
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               FontSize="16" />
+                        <Label Text="{Binding Description}" 
+                               LineBreakMode="NoWrap"
+                               Style="{DynamicResource ListItemDetailTextStyle}"
+                               FontSize="13" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</rxui:ReactiveContentPage>

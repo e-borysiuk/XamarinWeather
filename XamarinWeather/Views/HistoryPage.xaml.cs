@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
+using ReactiveUI;
+using ReactiveUI.XamForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,23 +19,11 @@ namespace XamarinWeather.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class HistoryPage : ContentPage
+    public partial class HistoryPage : ReactiveContentPage<HistoryViewModel>
     {
-        HistoryViewModel viewModel;
-
         public HistoryPage()
         {
             InitializeComponent();
-
-            BindingContext = viewModel = new HistoryViewModel();
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            if (viewModel.Items.Count == 0)
-                viewModel.IsBusy = true;
         }
     }
 }

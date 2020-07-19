@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            mc:Ignorable="d"
-            xmlns:views="clr-namespace:XamarinWeather.Views"
-            x:Class="XamarinWeather.Views.MainPage">
+<rxui:ReactiveTabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                         xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                         xmlns:local="clr-namespace:XamarinWeather.ViewModels;assembly=XamarinWeather"
+                         x:Class="XamarinWeather.Views.MainPage"
+                         xmlns:views="clr-namespace:XamarinWeather.Views"
+                         x:TypeArguments="local:MainViewModel">
 
     <TabbedPage.Children>
         <NavigationPage Title="Home">
@@ -15,7 +15,7 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <views:HomePage />
+                <views:HomePage x:Name="HomePage" />
             </x:Arguments>
         </NavigationPage>
 
@@ -26,9 +26,9 @@
                 </OnPlatform>
             </NavigationPage.Icon>
             <x:Arguments>
-                <views:HistoryPage />
+                <views:HistoryPage x:Name="HistoryPage" />
             </x:Arguments>
         </NavigationPage>
     </TabbedPage.Children>
-    
-</TabbedPage>
+
+</rxui:ReactiveTabbedPage>

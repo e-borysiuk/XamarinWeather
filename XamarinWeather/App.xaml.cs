@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using XamarinWeather.Services;
 using XamarinWeather.Views;
 
+using Splat;
 namespace XamarinWeather
 {
     public partial class App : Application
@@ -14,7 +15,8 @@ namespace XamarinWeather
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            MainPage = new MainPage();
+            var bootstrap = new AppBootstrapper();
+            MainPage = new MainPage(bootstrap.CreateMainViewModel());
         }
 
         protected override void OnStart()

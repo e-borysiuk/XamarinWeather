@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace XamarinWeather.ViewModels
 {
-    public class HomePageViewModel : BaseViewModel
+    public class HomeViewModel : BaseViewModel
     {
-        public HomePageViewModel()
+        public HomeViewModel()
         {
             Title = "Homepage";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://xamarin.com"));
