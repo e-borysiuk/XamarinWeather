@@ -30,7 +30,7 @@ namespace XamarinWeather.Views
 
         protected override void OnAppearing()
         {
-            ItemsCollectionView.ItemsSource = ViewModel.Items;
+            ItemsCollectionView.ItemsSource = ViewModel?.Items;
             base.OnAppearing();
         }
     }

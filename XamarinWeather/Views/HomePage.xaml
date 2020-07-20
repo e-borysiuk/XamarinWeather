@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rxui:ReactiveContentPage
     x:Class="XamarinWeather.Views.HomePage"
-    x:TypeArguments="viewModels:HomeViewModel"          
+    x:TypeArguments="viewModels:HomeViewModel"
     xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:viewModels="clr-namespace:XamarinWeather.ViewModels;assembly=XamarinWeather"
     Title="Xamarin Weather">
-    <Grid Padding="10" VerticalOptions="FillAndExpand">
+    <Grid Padding="15" VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -15,45 +15,56 @@
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="0">
             <Entry x:Name="EtLocation"
-                   Placeholder="Input location" />
+                   Placeholder="Input location"
+                   PlaceholderColor="#DDFFFFFF"
+                   />
             <Button x:Name="BtGetWeather"
-                    Text="Get weather using GPS" />
+                    Clicked="BtGetWeather_OnClicked"
+                    Text="Get weather using GPS"
+                    BackgroundColor="Transparent"
+                    BorderColor="White"
+                    BorderWidth="2"/>
         </StackLayout>
 
-        <Grid VerticalOptions="CenterAndExpand" Grid.Row="1" ColumnSpacing="40" RowSpacing="2">
+        <ActivityIndicator x:Name="AiLoading" Color="#CCFFFFFF" Grid.Row="1" Scale="0.4"></ActivityIndicator>
+
+        <Grid x:Name="GrWeather" VerticalOptions="CenterAndExpand" Grid.Row="1" ColumnSpacing="40" RowSpacing="2" IsVisible="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
-                <Image Source="xamarin_logo.png" 
+                <Image Source="xamarin_logo.png"
+                       x:Name="ImIcon"
                        HeightRequest="64"
-                       Aspect="AspectFit"
-                       BackgroundColor="Blue"/>
-                <Label FontSize="22" VerticalTextAlignment="Center">Hot</Label>
+                       WidthRequest="64"
+                       Aspect="AspectFit"/>
+                <Label x:Name="LbClouds" FontSize="19" Margin="30, 0, 0, 0" VerticalTextAlignment="Center">Hot</Label>
             </StackLayout>
-            <Label Grid.Column="0" Grid.Row="1" FontSize="92" Grid.RowSpan="2">20</Label>
+            <Label x:Name="LbTemp" Padding="0, 10, 0, 0" VerticalOptions="Start" VerticalTextAlignment="Start" FontFamily="Raleway-ExtraLight" Grid.Column="0" Grid.Row="0" FontSize="112" Grid.RowSpan="4">20°</Label>
             <StackLayout Margin="0, 10, 0, 0" Grid.Column="1" Grid.Row="1" VerticalOptions="CenterAndExpand" Spacing="0">
-                <Label FontAttributes="Bold" FontSize="12">Pressure</Label>
-                <Label FontSize="16">999hpA</Label>
+                <Label FontAttributes="Bold" FontSize="12" FontFamily="Raleway-Light">Pressure</Label>
+                <Label x:Name="LbPressure" FontSize="16">999hpA</Label>
             </StackLayout>
             <StackLayout Margin="0, 10, 0, 0" Grid.Column="1" Grid.Row="2" VerticalOptions="CenterAndExpand" Spacing="0">
-                <Label FontAttributes="Bold" FontSize="12">Humidity</Label>
-                <Label FontSize="16">55%</Label>
+                <Label FontAttributes="Bold" FontSize="12" FontFamily="Raleway-Light">Humidity</Label>
+                <Label x:Name="LbHumidity" FontSize="16">55%</Label>
             </StackLayout>
 
         </Grid>
 
         <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="2">
-            <Label VerticalOptions="Center">Refresh every: </Label>
-            <Entry Text="60" WidthRequest="40" HorizontalTextAlignment="Center"></Entry>
-            <Label VerticalOptions="Center">Minutes</Label>
+            <Label VerticalOptions="Center" TextColor="Azure">Refresh every: </Label>
+            <Entry Text="60" WidthRequest="40" TextColor="Azure" HorizontalTextAlignment="Center"></Entry>
+            <Label VerticalOptions="Center" TextColor="Azure">Minutes</Label>
         </StackLayout>
     </Grid>
 </rxui:ReactiveContentPage>

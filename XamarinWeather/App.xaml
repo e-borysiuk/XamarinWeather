@@ -3,18 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:magicGradients="clr-namespace:MagicGradients;assembly=MagicGradients"
              mc:Ignorable="d"
              x:Class="XamarinWeather.App">
 
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+            <Color x:Key="NavigationPrimary">#338af9</Color>
+            <Style TargetType="NavigationPage" ApplyToDerivedTypes="True">
+                <Setter Property="BarBackgroundColor" Value="#338af9" />
                 <Setter Property="BarTextColor" Value="White" />
             </Style>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontFamily" Value="Raleway-Regular" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontFamily" Value="Raleway-Regular" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontFamily" Value="Raleway-Regular" />
+            </Style>
         </ResourceDictionary>
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="ControlTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <magicGradients:GradientView VerticalOptions="FillAndExpand">
+                                <magicGradients:GradientView.GradientSource>
+                                    <magicGradients:LinearGradient Angle="0">
+                                        <magicGradients:GradientStop Color="#338af9" Offset="0" />
+                                        <magicGradients:GradientStop Color="#2ff8ff" Offset="1" />
+                                    </magicGradients:LinearGradient>
+                                </magicGradients:GradientView.GradientSource>
+                            </magicGradients:GradientView>
+                            <ContentPresenter />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
-    
 </Application>

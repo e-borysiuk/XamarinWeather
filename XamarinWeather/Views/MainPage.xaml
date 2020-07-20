@@ -5,7 +5,8 @@
                          xmlns:local="clr-namespace:XamarinWeather.ViewModels;assembly=XamarinWeather"
                          x:Class="XamarinWeather.Views.MainPage"
                          xmlns:views="clr-namespace:XamarinWeather.Views"
-                         x:TypeArguments="local:MainViewModel">
+                         x:TypeArguments="local:MainViewModel"
+                         BarBackgroundColor="#338af9">
 
     <TabbedPage.Children>
         <NavigationPage Title="Home">

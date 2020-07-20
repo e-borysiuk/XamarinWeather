@@ -18,6 +18,7 @@ namespace XamarinWeather
             Locator.CurrentMutable.Register(() => new HomePage(), typeof(IViewFor<HomeViewModel>));
             Locator.CurrentMutable.Register(() => new HistoryPage(), typeof(IViewFor<HistoryViewModel>));
         }
+
         private void RegisterViewModels()
         {
             Locator.CurrentMutable.Register(() => new HomeViewModel(), typeof(IRoutableViewModel), typeof(HomeViewModel).FullName);
