@@ -30,10 +30,18 @@ namespace XamarinWeather.Views
                     x => x.GetWeather,
                     x => x.BtGetWeather,
                     x => x.CityInput).DisposeWith(disposable);
+                
+                this.Bind(ViewModel,
+                    x => x.Interval,
+                    x => x.EtInterval.Text).DisposeWith(disposable);
 
                 this.Bind(ViewModel,
                     x => x.CityInput,
                     x => x.EtLocation.Text).DisposeWith(disposable);
+
+                this.Bind(ViewModel,
+                    x => x.Output.Name,
+                    x => x.LbCityName.Text).DisposeWith(disposable);
 
                 this.Bind(ViewModel,
                     x => x.Output.DisplayTemp,
