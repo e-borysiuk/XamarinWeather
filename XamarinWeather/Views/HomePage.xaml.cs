@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using DynamicData.Binding;
@@ -58,9 +59,15 @@ namespace XamarinWeather.Views
                     x => x.IsLoading,
                     x => x.AiLoading.IsRunning).DisposeWith(disposable);
 
-                ViewModel.GetWeather.ThrownExceptions.Subscribe(async exception => {
-                    await DisplayAlert("Alert", "Something went wrong", "OK");
-                });
+                ViewModel.GetWeather.ThrownExceptions
+                    .Subscribe(async exception =>
+                    {
+                        if (exception.Message.Contains("404"))
+                            await DisplayAlert("Alert", "Couldn't find specified city.", "OK");
+                        else
+                            await DisplayAlert("Alert", "Something went wrong.", "OK");
+                    })
+                    .DisposeWith(disposable);
             });
 
             this.WhenAnyValue(x => x.ViewModel.CityInput)

@@ -19,7 +19,6 @@
                    PlaceholderColor="#DDFFFFFF"
                    />
             <Button x:Name="BtGetWeather"
-                    Clicked="BtGetWeather_OnClicked"
                     Text="Get weather using GPS"
                     BackgroundColor="Transparent"
                     BorderColor="White"

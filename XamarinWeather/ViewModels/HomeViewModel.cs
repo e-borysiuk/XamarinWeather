@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ReactiveUI;
 using Splat;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinWeather.Helpers;
 using XamarinWeather.Models;
 using XamarinWeather.Services;
 
@@ -28,10 +30,10 @@ namespace XamarinWeather.ViewModels
 
             GetWeather = ReactiveCommand.CreateFromTask<string, WeatherRoot>(
                 city => {
-                if (string.IsNullOrEmpty(city))
+                    if (string.IsNullOrEmpty(city))
+                        return GetWeatherUsingGps();
                     return WeatherService.GetWeather(city);
-                return WeatherService.GetWeather(Latitude, Longitude);
-            });
+                });
 
             _output = GetWeather.ToProperty(this, x => 
                 x.Output, scheduler: RxApp.MainThreadScheduler);
@@ -41,14 +43,30 @@ namespace XamarinWeather.ViewModels
                     .IsExecuting
                     .ToProperty(this, x => x.IsLoading);
 
-            GetWeather.ThrownExceptions.Subscribe(exception => {
-                this.Log().Warn("Error!", exception);
-            });
+            //GetWeather.ThrownExceptions.Subscribe(exception => {
+            //    this.Log().Warn("Error!", exception);
+            //});
         }
 
-        private void GetPosition()
-        {
+        private async Task<WeatherRoot> GetWeatherUsingGps()
+        {   
+            var hasPermission = await PermissionHelpers.CheckPermissions();
+            if (!hasPermission)
+                return null;
 
+            var position = await Geolocation.GetLastKnownLocationAsync();
+
+            if (position == null)
+            {
+                // get full location if not cached.
+                position = await Geolocation.GetLocationAsync(new GeolocationRequest
+                {
+                    DesiredAccuracy = GeolocationAccuracy.Medium,
+                    Timeout = TimeSpan.FromSeconds(10)
+                });
+            }
+
+            return await WeatherService.GetWeather(Latitude, Longitude);
         }
 
         public double Latitude
