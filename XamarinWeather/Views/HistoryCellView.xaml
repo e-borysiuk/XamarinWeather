@@ -16,7 +16,6 @@
             <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Image x:Name="ImIcon"
-               Source="xamarin_logo.png"
                WidthRequest="20"
                HeightRequest="20"
                Grid.RowSpan="2" />

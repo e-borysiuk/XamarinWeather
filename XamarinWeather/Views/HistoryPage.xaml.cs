@@ -29,7 +29,7 @@ namespace XamarinWeather.Views
             this.WhenActivated(disposables =>
             {
                 this.OneWayBind(ViewModel, 
-                    x => x.History, 
+                    x => x.Movies, 
                     x => x.LvHistory.ItemsSource)
                     .DisposeWith(disposables);
 

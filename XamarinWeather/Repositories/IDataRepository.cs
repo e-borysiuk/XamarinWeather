@@ -11,10 +11,10 @@ namespace XamarinWeather.Repositories
 {
     public interface IDataRepository
     {
-        Subject<int> NewEntryUpdate { get; set; }
         Task<List<WeatherHistory>> GetItemsAsync();
         Task<WeatherHistory> GetItemAsync(int id);
         Task<int> SaveItemAsync(WeatherHistory item);
         Task<int> DeleteItemAsync(WeatherHistory item);
+        IObservableCache<WeatherHistory, int> History { get; }
     }
 }

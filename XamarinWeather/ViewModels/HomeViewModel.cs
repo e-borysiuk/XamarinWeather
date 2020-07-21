@@ -73,7 +73,9 @@ namespace XamarinWeather.ViewModels
                 .Throttle(TimeSpan.FromSeconds(2))
                 .Subscribe(data =>
                 {
-                    _dataRepository.SaveItemAsync(data.ToHistory());
+                    var h = data.ToHistory();
+                    h.Id = 1;
+                    _dataRepository.SaveItemAsync(h);
                 });
         }
 

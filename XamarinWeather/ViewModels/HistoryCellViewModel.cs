@@ -19,6 +19,6 @@ namespace XamarinWeather.ViewModels
 
         public string LocationDetails => Weather.LocationDetails;
 
-        public ImageSource Icon => ImageSource.FromUri(new Uri(Weather?.Icon));
+        public ImageSource Icon => ImageSource.FromFile(Weather?.Icon);
     }
 }

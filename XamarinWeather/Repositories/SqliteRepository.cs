@@ -14,7 +14,7 @@ using XamarinWeather.Models;
 namespace XamarinWeather.Repositories
 {
 
-    public class SqliteRepository : IDataRepository
+    public class SqliteRepository : IDataRepository, IDisposable
     {
         private static readonly Lazy<SQLiteAsyncConnection> LazyInitializer = new Lazy<SQLiteAsyncConnection>(() =>
         {
@@ -22,6 +22,9 @@ namespace XamarinWeather.Repositories
         });
         private static SQLiteAsyncConnection Database => LazyInitializer.Value;
         private static bool _initialized;
+
+        private readonly SourceCache<WeatherHistory, int> _internalSourceCache;
+        public IObservableCache<WeatherHistory, int> History => _internalSourceCache;
 
 
         private async Task InitializeAsync()
@@ -39,14 +42,17 @@ namespace XamarinWeather.Repositories
         public SqliteRepository()
         {
             InitializeAsync().SafeFireAndForget(false);
-            NewEntryUpdate = new Subject<int>();
+            _internalSourceCache = new SourceCache<WeatherHistory, int>(o => o.Id);
         }
 
-        public Subject<int> NewEntryUpdate { get; set; }
-
-        public Task<List<WeatherHistory>> GetItemsAsync()
+        public async Task<List<WeatherHistory>> GetItemsAsync()
         {
-            return Database.Table<WeatherHistory>().ToListAsync();
+            var data = await Database.Table<WeatherHistory>().ToListAsync();
+            if(_internalSourceCache.Count == 0)
+            {
+                _internalSourceCache.PopulateFrom(data.ToObservable());
+            }
+            return data;
         }
 
         public Task<WeatherHistory> GetItemAsync(int id)
@@ -54,19 +60,33 @@ namespace XamarinWeather.Repositories
             return Database.Table<WeatherHistory>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<int> SaveItemAsync(WeatherHistory item)
+        public async Task<int> SaveItemAsync(WeatherHistory item)
         {
-            NewEntryUpdate.OnNext(1);
-            if (item.Id != 0)
-            {
-                return Database.UpdateAsync(item);
-            }
-            return Database.InsertAsync(item);
+            await Database.InsertAsync(item);
+            string sql = @"select last_insert_rowid()";
+            var insertedId = await Database.ExecuteScalarAsync<long>(sql);
+            item.Id = (int)insertedId;
+            _internalSourceCache.AddOrUpdate(item);
+            return item.Id;
         }
 
         public Task<int> DeleteItemAsync(WeatherHistory item)
         {
             return Database.DeleteAsync(item);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _internalSourceCache?.Dispose();
+            }
         }
     }
 }

@@ -41,11 +41,9 @@
 
             <Label x:Name="LbCityName" HorizontalOptions="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"></Label>
             <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                <Image Source="xamarin_logo.png"
-                       x:Name="ImIcon"
+                <Image x:Name="ImIcon"
                        HeightRequest="64"
-                       WidthRequest="64"
-                       Aspect="AspectFit"/>
+                       WidthRequest="64"/>
                 <Label x:Name="LbClouds" FontSize="19" Margin="30, 0, 0, 0" VerticalTextAlignment="Center">Hot</Label>
             </StackLayout>
             <Label x:Name="LbTemp" FontSize="96" Padding="0, 10, 0, 0" VerticalOptions="Start" VerticalTextAlignment="Start" FontFamily="Raleway-ExtraLight" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">20°</Label>

@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using DynamicData;
+using DynamicData.PLinq;
 using ReactiveUI;
 using Splat;
-using Xamarin.Forms;
-
 using XamarinWeather.Models;
 using XamarinWeather.Repositories;
-using XamarinWeather.Services;
-using XamarinWeather.Views;
 
 namespace XamarinWeather.ViewModels
 {
@@ -23,7 +16,7 @@ namespace XamarinWeather.ViewModels
     {
         private readonly IDataRepository _dataRepository;
         private readonly ObservableAsPropertyHelper<bool> _isRefreshing;
-        private IEnumerable<HistoryCellViewModel> _history;
+        private readonly ReadOnlyObservableCollection<HistoryCellViewModel> _history;
 
         public HistoryViewModel()
         {
@@ -31,29 +24,30 @@ namespace XamarinWeather.ViewModels
             _dataRepository = Locator.Current.GetService<IDataRepository>();
 
             LoadHistory = ReactiveCommand.CreateFromTask<Unit, Unit>(async _ => {
-                    var data = await _dataRepository.GetItemsAsync();
-                    History = new List<HistoryCellViewModel>(data.Select(x => new HistoryCellViewModel(x)));
-                    return Unit.Default;
-                }, outputScheduler: RxApp.TaskpoolScheduler);
+                await _dataRepository.GetItemsAsync();
+                return Unit.Default;
+            });
+
+            _dataRepository
+                .History
+                .Connect()
+                .SubscribeOn(TaskPoolScheduler)
+                .ObserveOn(TaskPoolScheduler)
+                .Transform(movie => new HistoryCellViewModel(movie))
+                .DisposeMany()
+                .ObserveOn(MainThreadScheduler)
+                .Bind(out _history)
+                .Subscribe();
 
             LoadHistory.Subscribe();
-
-            _dataRepository.NewEntryUpdate.ObserveOn(RxApp.MainThreadScheduler).Subscribe(_ =>
-            {
-                LoadHistory.Execute();
-            });
+            LoadHistory.Execute();
 
             _isRefreshing =
                 LoadHistory
                     .IsExecuting
                     .ToProperty(this, x => x.IsRefreshing, true);
         }
-
-        public IEnumerable<HistoryCellViewModel> History
-        {
-            get => _history;
-            set => this.RaiseAndSetIfChanged(ref _history, value);
-        }
+        public ReadOnlyObservableCollection<HistoryCellViewModel> Movies => _history;
 
         public ReactiveCommand<Unit, Unit> LoadHistory
         {

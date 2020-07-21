@@ -32,7 +32,7 @@ namespace XamarinWeather.Helpers
         {
             return new WeatherHistory
             {
-                Icon = $"http://openweathermap.org/img/w/{weather?.Weather?[0]?.Icon}.png",
+                Icon = $"_{weather?.Weather?[0]?.Icon}.png",
                 LocationDetails = $"{weather.Name} {weather.DisplayDate}",
                 ShortenedWeather = $"Temp: {weather.DisplayTemp}, {weather.DisplayDescription}"
             };
