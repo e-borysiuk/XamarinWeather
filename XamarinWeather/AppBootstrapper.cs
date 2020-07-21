@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using Splat;
+using XamarinWeather.Repositories;
 using XamarinWeather.Services;
 using XamarinWeather.ViewModels;
 using XamarinWeather.Views;
@@ -18,7 +19,8 @@ namespace XamarinWeather
         private void RegisterServices()
         {
             Locator.CurrentMutable.RegisterLazySingleton(() => new WeatherService(), typeof(IWeatherService));
-            Locator.CurrentMutable.Register(() => new BackgroundService(), typeof(IBackgroundService));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new SqliteRepository(), typeof(IDataRepository));
+            Locator.CurrentMutable.RegisterLazySingleton(() => new BackgroundService(), typeof(IBackgroundService));
         }
 
         private void RegisterViews()

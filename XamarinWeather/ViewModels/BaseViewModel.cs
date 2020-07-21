@@ -13,7 +13,6 @@ namespace XamarinWeather.ViewModels
 {
     public class BaseViewModel : ReactiveObject
     {
-        public IDataStore<Item> DataStore;
 
         private bool isBusy;
         public bool IsBusy
@@ -31,7 +30,6 @@ namespace XamarinWeather.ViewModels
 
         public BaseViewModel(IScheduler mainThreadScheduler = null, IScheduler taskPoolScheduler = null)
         {
-            DataStore = DependencyService.Get<IDataStore<Item>>(); 
             MainThreadScheduler = mainThreadScheduler ?? RxApp.MainThreadScheduler;
             TaskPoolScheduler = taskPoolScheduler ?? RxApp.TaskpoolScheduler;
         }

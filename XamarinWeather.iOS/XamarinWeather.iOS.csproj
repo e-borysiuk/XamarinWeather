@@ -154,4 +154,58 @@
       <Name>XamarinWeather</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_50n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_01d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_01n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_02d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_02n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_03d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_03n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_04d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_04n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_09d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_09n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_10d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_10n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_11d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_11n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_13d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_13n.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\_50d.png" />
+  </ItemGroup>
 </Project>

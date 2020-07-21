@@ -26,11 +26,29 @@ namespace XamarinWeather.Views
         {
             InitializeComponent();
 
+            this.WhenActivated(disposables =>
+            {
+                this.OneWayBind(ViewModel, 
+                    x => x.History, 
+                    x => x.LvHistory.ItemsSource)
+                    .DisposeWith(disposables);
+
+                this.OneWayBind(ViewModel,
+                        x => x.IsRefreshing,
+                        x => x.AiLoading.IsRunning)
+                    .DisposeWith(disposables);
+
+                ViewModel.LoadHistory.ThrownExceptions
+                    .Subscribe(async exception => {
+                        await DisplayAlert("Alert", "Something went wrong.", "OK");
+                    })
+                    .DisposeWith(disposables);
+            });
         }
 
         protected override void OnAppearing()
         {
-            ItemsCollectionView.ItemsSource = ViewModel?.Items;
+            this.ViewModel.LoadHistory.Execute();
             base.OnAppearing();
         }
     }

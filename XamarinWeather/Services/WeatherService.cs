@@ -18,7 +18,6 @@ namespace XamarinWeather.Services
 
         private string _lastSearchedCity;
         public Subject<WeatherRoot> NewWeatherUpdate { get; set; }
-        public WeatherRoot CachedWeather { get; set; }
 
         public WeatherService()
         {
@@ -69,8 +68,8 @@ namespace XamarinWeather.Services
                 if (string.IsNullOrWhiteSpace(json))
                     return;
 
-                CachedWeather = DeserializeObject<WeatherRoot>(json);
-                NewWeatherUpdate.OnNext(CachedWeather);
+                var weather = DeserializeObject<WeatherRoot>(json);
+                NewWeatherUpdate.OnNext(weather);
             }
         }
     }

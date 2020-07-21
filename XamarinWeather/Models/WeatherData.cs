@@ -97,11 +97,11 @@ namespace XamarinWeather.Models
         [JsonProperty("name")]
         public string Name { get; set; } = string.Empty;
 
-        [JsonProperty("dt_txt")]
+        [JsonProperty("dt")]
         public string Date { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public string DisplayDate => DateTime.Parse(Date).ToLocalTime().ToString("g");
+        public string DisplayDate => DateTimeOffset.FromUnixTimeSeconds(long.Parse(Date)).DateTime.ToLocalTime().ToString("MM/dd/yyyy HH:mm");
         [JsonIgnore]
         public string DisplayTemp => $"{MainWeather?.Temperature.Round() ?? 0}°";
         [JsonIgnore]
@@ -110,8 +110,8 @@ namespace XamarinWeather.Models
         public string DisplayPressure => $"{MainWeather?.Pressure ?? 0}hPa";
         [JsonIgnore]
         public string DisplayDescription => Weather?.Single().Description;
-        [JsonIgnore]
-        public ImageSource DisplayIcon => ImageSource.FromUri(new Uri($"http://openweathermap.org/img/w/{Weather?[0]?.Icon}.png"));
+
+        [JsonIgnore] public ImageSource DisplayIcon => ImageSource.FromFile($"_{Weather?[0]?.Icon}.png");
     }
 
     public class WeatherForecastRoot

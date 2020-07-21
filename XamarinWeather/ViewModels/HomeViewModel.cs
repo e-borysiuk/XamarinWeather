@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinWeather.Helpers;
 using XamarinWeather.Models;
+using XamarinWeather.Repositories;
 using XamarinWeather.Services;
 
 namespace XamarinWeather.ViewModels
@@ -18,9 +19,9 @@ namespace XamarinWeather.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         private readonly IWeatherService _weatherService;
+        private readonly IDataRepository _dataRepository;
         private readonly IBackgroundService _backgroundService;
         private readonly ObservableAsPropertyHelper<bool> _isLoading;
-        //private readonly ObservableAsPropertyHelper<WeatherRoot> _output;
         private WeatherRoot _output;
         private string _cityInput;
         private string _interval;
@@ -30,6 +31,7 @@ namespace XamarinWeather.ViewModels
             Interval = "15";
             Title = "Homepage";
             _weatherService = Locator.Current.GetService<IWeatherService>();
+            _dataRepository = Locator.Current.GetService<IDataRepository>();
             _backgroundService = Locator.Current.GetService<IBackgroundService>();
 
             GetWeather = ReactiveCommand.CreateFromTask<string, WeatherRoot>(
@@ -48,7 +50,7 @@ namespace XamarinWeather.ViewModels
                     .ToProperty(this, x => x.IsLoading);
 
             this.WhenValueChanged(x => x.Interval)
-                .Skip(1)
+                .Skip(1) // Skip initial value assignment
                 .Throttle(TimeSpan.FromSeconds(2))
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Subscribe(interval =>
@@ -63,6 +65,15 @@ namespace XamarinWeather.ViewModels
                 .Subscribe(_ => {
                     if(!_backgroundService.IsJobRunning)
                         _backgroundService.RunJob(int.Parse(string.IsNullOrEmpty(Interval) ? "0" : Interval));
+                });
+
+            this.WhenValueChanged(x => x.Output)
+                .Skip(1) // Skip initial value assignment
+                .DistinctUntilChanged()
+                .Throttle(TimeSpan.FromSeconds(2))
+                .Subscribe(data =>
+                {
+                    _dataRepository.SaveItemAsync(data.ToHistory());
                 });
         }
 

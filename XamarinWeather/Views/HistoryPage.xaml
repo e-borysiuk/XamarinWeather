@@ -6,40 +6,20 @@
     xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:views="clr-namespace:XamarinWeather.Views;assembly=XamarinWeather"
     Title="Weather history">
-    <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" Command="{Binding LoadItemsCommand}">
-        <CollectionView x:Name="ItemsCollectionView">
-            <CollectionView.ItemTemplate>
+    <StackLayout>
+        <ListView x:Name="LvHistory"
+              HasUnevenRows="True"
+              SeparatorVisibility="None"
+              CachingStrategy="RecycleElementAndDataTemplate"
+              Margin="10">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="5*" />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="xamarin_logo.png"
-                               WidthRequest="42"
-                               HeightRequest="20"
-                               Grid.RowSpan="2"
-                               BackgroundColor="Blue"/>
-                        <Label Grid.Column="1"
-                               Grid.Row="0"
-                               Text="{Binding Text}" 
-                               LineBreakMode="NoWrap" 
-                               Style="{DynamicResource ListItemTextStyle}" 
-                               FontSize="16" />
-                        <Label Grid.Column="1"
-                               Grid.Row="1"
-                               Text="{Binding Description}" 
-                               LineBreakMode="NoWrap"
-                               Style="{DynamicResource ListItemDetailTextStyle}"
-                               FontSize="13" />
-                    </Grid>
+                    <views:HistoryCellView />
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ActivityIndicator x:Name="AiLoading" HorizontalOptions="Center" VerticalOptions="Center" Scale="0.3"></ActivityIndicator>
+    </StackLayout>
 </rxui:ReactiveContentPage>

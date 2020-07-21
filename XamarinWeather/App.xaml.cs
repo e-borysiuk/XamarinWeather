@@ -13,8 +13,6 @@ namespace XamarinWeather
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             var bootstrap = new AppBootstrapper();
             MainPage = new MainPage(bootstrap.CreateMainViewModel());
         }
