@@ -13,8 +13,8 @@ namespace XamarinWeather.Services
 {
     public class WeatherService : IWeatherService
     {
-        const string WeatherCoordinatesUri = "http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units=metric&appid=22b4d3a44013a5bc3ffacd3ee3a2048e";
-        const string WeatherCityUri = "http://api.openweathermap.org/data/2.5/weather?q={0}&units=metric&appid=22b4d3a44013a5bc3ffacd3ee3a2048e";
+        const string WeatherCoordinatesUri = "https://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units=metric&appid=22b4d3a44013a5bc3ffacd3ee3a2048e";
+        const string WeatherCityUri = "https://api.openweathermap.org/data/2.5/weather?q={0}&units=metric&appid=22b4d3a44013a5bc3ffacd3ee3a2048e";
 
         private string _lastSearchedCity;
         public Subject<WeatherRoot> NewWeatherUpdate { get; set; }
