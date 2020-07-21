@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -150,7 +151,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\XamarinWeather\XamarinWeather.csproj">
-      <Project>{52D8FA16-CB9A-4AF7-A194-B78D306417A2}</Project>
+      <Project>{BDCAF5B6-5C52-4B2A-BD6A-79C4465ECACB}</Project>
       <Name>XamarinWeather</Name>
     </ProjectReference>
   </ItemGroup>

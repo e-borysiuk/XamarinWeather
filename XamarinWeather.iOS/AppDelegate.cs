@@ -23,6 +23,7 @@ namespace XamarinWeather.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            UINavigationBar.Appearance.TintColor = UIColor.White;
             this.ShinyFinishedLaunching(new Startup());
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
